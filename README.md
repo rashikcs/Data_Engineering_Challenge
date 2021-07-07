@@ -85,6 +85,11 @@ This challenge involves mainly the following aspects:
       - #### Calculate KPIs: All the methods are in the calculate_kpi.py scripts 
           ```
           # Sample usage
-            >>> result = get_top_n_customers(merged_df, sort_column = 'LIFETIMEREVENUE')
+            >>> result = get_revenues_sum(merged_df, variable = 'month')
+            >>> result = orders_per_month(merged_df, aggregate_function='sum')
+            >>> result = orders_per_month(merged_df, aggregate_function='average order volume')
+            >>> result = get_revenues_sum(merged_df, variable = 'customer segment')
+            >>> result = get_top_n_customers(merged_df, sort_column = 'life time order volume')
+            >>> result = get_top_n_customers(merged_df, sort_column = 'life time revenue')
             
 **All the answers to the queries have been implemented in the Flaconi_Data_Engineering_Challenge.ipynb file. Please check the file for more details**
