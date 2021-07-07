@@ -2,12 +2,12 @@
 
 Table Of Content for this readme.
 
-- [Flaconi Data Engineering Challenge](#flaconi-data-engineering-challenge)
+- [Data Engineering Challenge](#data-engineering-challenge)
 - [Task Solution](#task-solution)
 - [Installation](#installation)
 - [Project Structure and Usage](#project-structure-and-usage)
 
-# Flaconi Data Engineering Challenge
+# Data Engineering Challenge
 This challenge involves mainly the following aspects:
 - Multidimensional modeling for Data Warehouse
 - ETL by using Python
