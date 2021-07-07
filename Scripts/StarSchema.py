@@ -145,12 +145,12 @@ class StarSchema(DataSchemas):
             if 'fact' in file:
                 fact_table = df
             else:
-                key = file.split("\\")[-1].split('.')[0]
+                key = file.split(os.sep)[-1].split('.')[0]
                 dimension_tables[key] = df
             
             if verbose:
                 print('Location:', file)
-                print('File Name:', file.split("\\")[-1])
+                print('File Name:', file.split(os.sep)[-1])
 
         return fact_table, dimension_tables
 
