@@ -1,5 +1,5 @@
 #folders to exclude
-transformed_tables/
+Transformed_tables/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

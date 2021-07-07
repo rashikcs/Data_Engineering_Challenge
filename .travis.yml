@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.8"
+  
+# command to install dependencies
+install:  
+  - pip install pandas==1.3.0
+  - pip install xlrd==2.0.1
+  - pip install openpyxl==3.0.7
+  - pip install pyarrow==4.0.1
+# command to run tests
+script: python test_flaconi_data_engineering_challenge.py

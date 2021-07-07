@@ -1,0 +1,8 @@
+name: flaconi_data_challenge
+
+dependencies:
+  - python=3.8
+  - pip
+  - jupyter
+  - pip:
+    - -r file:requirements.txt
