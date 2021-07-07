@@ -1,11 +1,11 @@
 import pandas as pd
 import unittest
-from Scripts.calculate_kpi import get_revenues_sum 
-from Scripts.calculate_kpi import get_top_n_customers
-from Scripts.calculate_kpi import orders_per_month
-from Scripts.StarSchema import StarSchema
-from Scripts.utils import read_xlsx
-from Scripts.utils import remove_spaces_and_uppercase_df_columns
+from scripts.calculate_kpi import get_revenues_sum 
+from scripts.calculate_kpi import get_top_n_customers
+from scripts.calculate_kpi import orders_per_month
+from scripts.StarSchema import StarSchema
+from scripts.utils import read_xlsx
+from scripts.utils import remove_spaces_and_uppercase_df_columns
 
 class TestStarSchemaMethods(unittest.TestCase):
     """
@@ -151,7 +151,7 @@ if __name__ == "__main__":
                                                            'ORDER':[]},
                      fact_table_columns_containing_dimension_name = ['ORDERPRIORITY', 'ORDERQUANTITY'])
 
-    star.transform_table(False)
+    star.transform_table(True)
     merged_result_output = star.get_merged_table(False).sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
 
     unittest.main()
