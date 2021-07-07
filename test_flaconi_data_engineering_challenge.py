@@ -151,7 +151,7 @@ if __name__ == "__main__":
                                                            'ORDER':[]},
                      fact_table_columns_containing_dimension_name = ['ORDERPRIORITY', 'ORDERQUANTITY'])
 
-    star.transform_table(True)
-    merged_result_output = star.get_merged_table(False).sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
+    star.transform_table(False)
+    merged_result_output = star.get_merged_table(True).sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
 
     unittest.main()
