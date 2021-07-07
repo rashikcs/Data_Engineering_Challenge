@@ -165,6 +165,7 @@ class StarSchema(DataSchemas):
 
         for key in dimension_tables.keys():
             join_id = key.split('_')[1]+'ID'
+            print('join_id', join_id)
             merged_df = pd.merge(merged_df, dimension_tables[key], on=join_id,  how='inner')
 
         return merged_df
