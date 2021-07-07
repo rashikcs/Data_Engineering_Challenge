@@ -35,7 +35,7 @@ class StarSchema(DataSchemas):
     
     @property
     def name(self):
-        return "STAR_SCHEMA"
+        return "StarSchema"
 
     def init_params(self, 
                     df_xlsx_path: str,
