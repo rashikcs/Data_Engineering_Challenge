@@ -28,6 +28,21 @@ def create_directory(directory:str)->None:
     except Exception as error:
         raise Exception('Caught this error: ' + repr(error))
 
+def validate_directory(path1:str, path2:str)->str:
+    """
+    Given two seprate paths this function checks wheather combining 
+    them results a valid directory and returns the directory.
+
+    """
+    if path1 and path2:
+        directory = os.path.join(path1, path2)
+        if not os.path.exists(directory):
+            return ValueError('Invalid directory found!')
+        else:
+            return os.path.join(directory)
+            
+    return ValueError('Invalid directory found!')
+
 def convert_date_column(df:pd.core.frame.DataFrame)->None:
     """
     This function checks and convert all columns containing

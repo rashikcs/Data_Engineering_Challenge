@@ -25,7 +25,7 @@ class ETL():
     schema_name = None
     schema_arguments =  {'starschema':[ 'dataframe_xlsx_path',
                                         'xlsx_sheet_name',
-                                        'extra_columns_per_dimension_tables',
+                                        'dimension_features_without_dimension_name_substring',
                                         'fact_table_columns_containing_dimension_name']
                         }
 
@@ -53,9 +53,9 @@ class ETL():
             ***Star Schema***
             dataframe_path:str -> Path of the provided xlsx data
             
-            extra_columns_per_dimension_tables:dict -> dimension features which 
-                                                       doesn't contain dimension 
-                                                       name as substring.
+            dimension_features_without_dimension_name_substring:dict -> dimension features which 
+                                                                        doesn't contain dimension 
+                                                                        name as substring.
                                                        
             fact_table_columns_containing_dimension_name:list -> fact table features which 
                                                                  contain dimension name as 
@@ -69,28 +69,34 @@ class ETL():
 
             self.schema_obj.init_params(kwargs['dataframe_xlsx_path'],
                                         kwargs['xlsx_sheet_name'],
-                                        kwargs['extra_columns_per_dimension_tables'],
+                                        kwargs['dimension_features_without_dimension_name_substring'],
                                         kwargs['fact_table_columns_containing_dimension_name'])
         else:
             raise ValueError("Invalid Parameter detected while initializing the {} parameters.".format(self.schema_name))
             
-    def transform_table(self, verbose:bool = True)->None:
+    def transform_table(self, save_directory:str = 'output', verbose:bool = True)->None:
         """
         Transform table according to the provided scheme.
         """
 
-        self.schema_obj.transform_table(verbose)
+        self.schema_obj.transform_table(save_directory, verbose)
         
-    def get_transformed_tables(self, verbose:bool = True)->object:
+    def get_transformed_tables(self,  
+                               folder_directory:str=None,
+                               dataframe_name:str=None,
+                               verbose:bool = True)->object:
         """
         Returns transformed tables (i.e. fact tables, dimension tables)
         """
 
-        return self.schema_obj.get_transformed_tables(verbose)
+        return self.schema_obj.get_transformed_tables(folder_directory, dataframe_name, verbose)
         
-    def get_merged_table(self, verbose:bool = True)->pd.core.frame.DataFrame:
+    def get_merged_table(self,  
+                         folder_directory:str=None,
+                         dataframe_name:str=None,
+                         verbose:bool = True)->pd.core.frame.DataFrame:
         """
         Returns merged table from the transformed tables.
         """
 
-        return self.schema_obj.get_merged_table(verbose)
+        return self.schema_obj.get_merged_table(folder_directory, dataframe_name, verbose)

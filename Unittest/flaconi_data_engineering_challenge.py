@@ -30,6 +30,7 @@ class TestStarSchemaMethods(unittest.TestCase):
 
         self.original_dataframe = read_xlsx('sales.xlsx', 'Sales')
         remove_spaces_and_uppercase_df_columns(self.original_dataframe)
+        
         self.original_dataframe = self.original_dataframe.sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
 
         self.fact_sales_columns = ['PRODUCTID', 'ORDERID', 'ORDERPRIORITY', 'ORDERQUANTITY', 'DISCOUNT', 'SHIPPINGPRICE',
@@ -43,7 +44,7 @@ class TestStarSchemaMethods(unittest.TestCase):
         """
         method to check get_transformed_table function of the StarSchema class
         """  
-        fact_table, dimension_tables = star.get_transformed_tables(False)
+        fact_table, dimension_tables = star.get_transformed_tables(verbose=False)
 
         self.assertListEqual(list(fact_table.columns.values),
                              self.fact_sales_columns)
@@ -150,12 +151,12 @@ if __name__ == "__main__":
     star = ETL('starschema')
     star.init_params(dataframe_xlsx_path = 'sales.xlsx',
                      xlsx_sheet_name = 'Sales',
-                     extra_columns_per_dimension_tables = {'PRODUCT': ['UNITPRICE'],
+                     dimension_features_without_dimension_name_substring = {'PRODUCT': ['UNITPRICE'],
                                                            'CUSTOMER': [],
                                                            'ORDER':[]},
                      fact_table_columns_containing_dimension_name = ['ORDERPRIORITY', 'ORDERQUANTITY'])
 
-    star.transform_table(False)
-    merged_result_output = star.get_merged_table(False).sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
+    star.transform_table(verbose=False)
+    merged_result_output = star.get_merged_table(verbose=False).sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
 
     unittest.main()
