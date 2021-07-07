@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-def read_xlsx(path:str, sheet_name:str = 'Sales')->pd.core.frame.DataFrame:
+def read_xlsx(path:str, sheet_name:str)->pd.core.frame.DataFrame:
     """
     Reads and returns the excel file as dataframe from the 
     provided path.

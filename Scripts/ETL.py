@@ -15,16 +15,16 @@ class ETL():
     
     Methods
     -------
-    found_schema()
-    get_schema()
     init_params()
     transform_table()
+    get_transformed_tables()
     get_merged_table()
     """
 
     schema_obj = None
     schema_name = None
-    schema_arguments =  {'starschema':[ 'dataframe_path',
+    schema_arguments =  {'starschema':[ 'dataframe_xlsx_path',
+                                        'xlsx_sheet_name',
                                         'extra_columns_per_dimension_tables',
                                         'fact_table_columns_containing_dimension_name']
                         }
@@ -43,34 +43,6 @@ class ETL():
             return StarSchema()
         else:
             raise NotImplementedError 
-
-    def found_schema(self, schema_name:str)->bool:
-        """
-        Returns true if the schema exists in the schema_arguments dict
-        """
-
-        if schema_name in self.schema_arguments.keys():
-            return True
-        else:
-            return False
-            
-    def init_schema(self, **kwargs)->None:
-        """
-        Finds and initializes parameters of the schema or throw error otherwise.                                                                
-        """
-
-        schema_name = kwargs.pop('schema_name') if 'schema_name' in kwargs.keys() else self.schema_name 
-
-        if self.found_schema(schema_name):
-
-            if schema_name!= self.schema_name:
-                self.schema_name = schema_name
-                self.schema_obj = self.get_schema(schema_name)
-
-            self.init_params()
-
-        else:
-            raise ValueError("Schema not found!!")
 
     def init_params(self, **kwargs):
         """
@@ -95,7 +67,8 @@ class ETL():
         if self.schema_name.lower() == "starschema" and\
            not invalid_arguments:
 
-            self.schema_obj.init_params(kwargs['dataframe_path'],
+            self.schema_obj.init_params(kwargs['dataframe_xlsx_path'],
+                                        kwargs['xlsx_sheet_name'],
                                         kwargs['extra_columns_per_dimension_tables'],
                                         kwargs['fact_table_columns_containing_dimension_name'])
         else:

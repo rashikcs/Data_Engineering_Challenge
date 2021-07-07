@@ -1,9 +1,12 @@
 import pandas as pd
 import unittest
+import os
+import sys
+sys.path.insert(0, os.getcwd()) #adding current directory to pythonpath
 from Scripts.calculate_kpi import get_revenues_sum 
 from Scripts.calculate_kpi import get_top_n_customers
 from Scripts.calculate_kpi import orders_per_month
-from Scripts.StarSchema import StarSchema
+from Scripts.ETL import ETL
 from Scripts.utils import read_xlsx
 from Scripts.utils import remove_spaces_and_uppercase_df_columns
 
@@ -25,7 +28,7 @@ class TestStarSchemaMethods(unittest.TestCase):
     def setUp(self):
         """ Load the actual merged table."""
 
-        self.original_dataframe = read_xlsx('sales.xlsx')
+        self.original_dataframe = read_xlsx('sales.xlsx', 'Sales')
         remove_spaces_and_uppercase_df_columns(self.original_dataframe)
         self.original_dataframe = self.original_dataframe.sort_values(['PRODUCTID', 'ORDERID']).reset_index(drop=True)
 
@@ -144,8 +147,9 @@ class Test_calculate_kpi_Functions(unittest.TestCase):
 
 if __name__ == "__main__":
 
-    star = StarSchema()
-    star.init_params(df_xlsx_path = 'sales.xlsx',
+    star = ETL('starschema')
+    star.init_params(dataframe_xlsx_path = 'sales.xlsx',
+                     xlsx_sheet_name = 'Sales',
                      extra_columns_per_dimension_tables = {'PRODUCT': ['UNITPRICE'],
                                                            'CUSTOMER': [],
                                                            'ORDER':[]},

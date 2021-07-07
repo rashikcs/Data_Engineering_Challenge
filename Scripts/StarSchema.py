@@ -38,7 +38,8 @@ class StarSchema(DataSchemas):
         return "StarSchema"
 
     def init_params(self, 
-                    df_xlsx_path: str,
+                    dataframe_xlsx_path: str,
+                    xlsx_sheet_name:str,
                     extra_columns_per_dimension_tables:dict,
                     fact_table_columns_containing_dimension_name:list)->None:
         """
@@ -47,7 +48,7 @@ class StarSchema(DataSchemas):
 
         Args:
 
-            df_xlsx_path:str -> Path of the dataframe
+            dataframe_xlsx_path:str -> Path of the dataframe
 
             extra_columns_per_dimension_tables:dict -> dimension features which 
                                                        doesn't contain dimension 
@@ -58,8 +59,8 @@ class StarSchema(DataSchemas):
                                                                  substring.
 
         """
-        self.dataframe = read_xlsx(df_xlsx_path)
-        self.dataframe_name = df_xlsx_path.split('/')[-1].split('.')[0].upper()
+        self.dataframe = read_xlsx(dataframe_xlsx_path, xlsx_sheet_name)
+        self.dataframe_name = xlsx_sheet_name.upper()
         self.extra_columns_per_dimension_tables = extra_columns_per_dimension_tables
         self.fact_table_columns_containing_dimension_name = fact_table_columns_containing_dimension_name
         self.fact_table_name = 'fact_'+self.dataframe_name
