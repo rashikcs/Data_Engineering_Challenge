@@ -49,11 +49,12 @@ class StarSchema(DataSchemas):
 
         Args:
 
-            dataframe_xlsx_path:str -> Path of the dataframe
+            dataframe_xlsx_path:str -> Path of the dataframe_name
+            xlsx_sheet_name:str     -> Sheet name in the excel
 
             dimension_features_without_dimension_name_substring:dict -> dimension features which 
-                                                       doesn't contain dimension 
-                                                       name as substring.
+                                                                        doesn't contain dimension 
+                                                                        name as substring.
 
             fact_table_columns_containing_dimension_name:list -> fact table features which 
                                                                  contain dimension name as 
@@ -80,7 +81,43 @@ class StarSchema(DataSchemas):
         for key, value in self.dimension_features_without_dimension_name_substring.items():
             df = df.drop(columns=value)
         return df
-            
+    
+    def add_column_to_dim_table(self, 
+                          column_name:str, 
+                          dimension_array:list,
+                          dimension_name:str,
+                          fact:pd.core.frame.DataFrame):
+        """
+        This function adds column to the dimension table and removes from
+        fact table.
+
+        Args:
+            column_name:str
+            dimension_name:str
+            dimension_array:list
+            fact:pd.core.frame.Dataframe
+
+        """
+        dimension_array.append(column_name)
+        if column_name!=dimension_name+'ID':
+            del fact[column_name]
+
+    def valid_dimension_column(self, dimension_name:str, column_name:str)->bool:
+        """
+        This function checks the validity of a given column name 
+        and returns a boolean value.
+
+        Args:
+            column_name:str
+            dimension_name:str
+
+        """
+        if dimension_name in column_name and\
+           column_name not in  self.fact_table_columns_containing_dimension_name:
+            return True
+        else:
+            return False
+
     def create_and_save_tables(self,
                                df:pd.core.frame.DataFrame,
                                save_directory:str,
@@ -90,8 +127,10 @@ class StarSchema(DataSchemas):
         and saves in the given directory.
 
         Args:
-            save_directory:str-> directory to save output
-            verbose:bool ->  decides wheather to print putput
+            df:pd.core.frame.Dataframe 
+
+            save_directory:str   -> directory to save output
+            verbose:bool         ->  decides wheather to print putput
         """
 
         self.save_directory = os.path.join(save_directory, self.dataframe_name, self.name)
@@ -102,19 +141,15 @@ class StarSchema(DataSchemas):
         for key, value in dim_features.items():
             for column in df.columns:
                 
-                if key in column and\
-                   column not in  self.fact_table_columns_containing_dimension_name:
-
-                    value.append(column)
-                    if column!=key+'ID':
-                        del df[column]
+                if self.valid_dimension_column(key, column):
+                    self.add_column_to_dim_table(column, value, key, df)
             
             if verbose:
                 print('DIM_{} Table: '.format(key), dim_features[key])
             
             outname = 'dim_{}.parquet'.format(key)
             save_table_as_parquet(self.save_directory, 
-                                  outname, 
+                                  outname,
                                   self.dataframe[dim_features[key]],
                                   verbose)
 
@@ -131,7 +166,12 @@ class StarSchema(DataSchemas):
         """
         This function transforms the given table according to star schema 
         and saves resulted tables in the given directory.
+
+        Args:
+            save_directory:str   -> directory to save output
+            verbose:bool          ->  decides wheather to print putput
         """
+
         temp_df = self.dataframe.copy(deep=True)
         temp_df = self.drop_dimension_table_columns(temp_df)
         self.create_and_save_tables(temp_df, save_directory, verbose)
@@ -143,7 +183,13 @@ class StarSchema(DataSchemas):
                                verbose:bool = True)->tuple:
         """
         Fetches and returns the transformed tables from the 
-        saved directory.
+        saved directory. Returns the created tables by the object
+        if no directory provided.
+
+        Args:
+            folder_directory:str   -> directory to save output
+            dataframe_name:str     -> name of the saved table/datafrmae
+            verbose:bool           ->  decides wheather to print putput
         """
 
         try:
@@ -188,6 +234,11 @@ class StarSchema(DataSchemas):
         """
         Merges the transformed tables from the 
         saved directory and returns the dataframe.
+
+        Args:
+            folder_directory:str   -> directory to save output
+            dataframe_name:str     -> name of the saved table/datafrmae
+            verbose:bool           ->  decides wheather to print putput
         """
         try:
             fact_table, dimension_tables = self.get_transformed_tables(folder_directory, dataframe_name, verbose)

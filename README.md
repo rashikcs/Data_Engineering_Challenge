@@ -33,7 +33,7 @@ This challenge involves mainly the following aspects:
 
   **Requrements**: You need conda 4.9.2 or later to run this project. To use this project, first clone the repo on your device using the command below:
   ```
-  git clone 
+  git clone https://github.com/rashikcs/Flaconi_Data_Engineering_Challenge.git
   ```
  
   **Installation**: To install required packages and create virtual environment simply run following commands

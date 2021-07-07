@@ -77,6 +77,10 @@ class ETL():
     def transform_table(self, save_directory:str = 'output', verbose:bool = True)->None:
         """
         Transform table according to the provided scheme.
+
+        Args:
+            save_directory:str   -> directory to save output
+            verbose:bool         ->  decides wheather to print putput
         """
 
         self.schema_obj.transform_table(save_directory, verbose)
@@ -84,9 +88,14 @@ class ETL():
     def get_transformed_tables(self,  
                                folder_directory:str=None,
                                dataframe_name:str=None,
-                               verbose:bool = True)->object:
+                               verbose:bool = True)->tuple:
         """
         Returns transformed tables (i.e. fact tables, dimension tables)
+
+        Args:
+            folder_directory:str   -> directory to save output
+            dataframe_name:str     -> name of the saved table/datafrmae
+            verbose:bool           ->  decides wheather to print putput
         """
 
         return self.schema_obj.get_transformed_tables(folder_directory, dataframe_name, verbose)
@@ -97,6 +106,11 @@ class ETL():
                          verbose:bool = True)->pd.core.frame.DataFrame:
         """
         Returns merged table from the transformed tables.
+
+        Args:
+            folder_directory:str   -> directory to save output
+            dataframe_name:str     -> name of the saved table/datafrmae
+            verbose:bool           ->  decides wheather to print putput
         """
 
         return self.schema_obj.get_merged_table(folder_directory, dataframe_name, verbose)
