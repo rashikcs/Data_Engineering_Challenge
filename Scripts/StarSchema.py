@@ -27,7 +27,9 @@ class StarSchema(DataSchemas):
     Methods
     -------
     init_params()
-    drop_dimension_table_columns()
+    drop_default_dimension_table_columns()
+    valid_dimension_column()
+    add_column_to_dim_table()
     create_and_save_tables()
     transform_table()
     get_transformed_tables()
@@ -71,7 +73,7 @@ class StarSchema(DataSchemas):
         remove_spaces_and_uppercase_df_columns(self.dataframe)
         print(self.name, ': parameter Initialized!!')
         
-    def drop_dimension_table_columns(self,
+    def drop_default_dimension_table_columns(self,
                                      df:pd.core.frame.DataFrame)->pd.core.frame.DataFrame:
 
         """
@@ -169,11 +171,11 @@ class StarSchema(DataSchemas):
 
         Args:
             save_directory:str   -> directory to save output
-            verbose:bool          ->  decides wheather to print putput
+            verbose:bool         ->  decides wheather to print putput
         """
 
         temp_df = self.dataframe.copy(deep=True)
-        temp_df = self.drop_dimension_table_columns(temp_df)
+        temp_df = self.drop_default_dimension_table_columns(temp_df)
         self.create_and_save_tables(temp_df, save_directory, verbose)
 
 
