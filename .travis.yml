@@ -9,4 +9,4 @@ install:
   - pip install openpyxl==3.0.7
   - pip install pyarrow==4.0.1
 # command to run tests
-script: python Unittest\flaconi_data_engineering_challenge.py
+script: python Unittest/flaconi_data_engineering_challenge.py
