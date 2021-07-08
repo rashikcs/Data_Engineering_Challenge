@@ -3,8 +3,7 @@ from .StarSchema import StarSchema
 
 class ETL():
     """
-    A class used to transform and save table according to the provided schema
-
+    This class acts as a facade to interact with the DataSchenas subclasses.
     ...
 
     Attributes
