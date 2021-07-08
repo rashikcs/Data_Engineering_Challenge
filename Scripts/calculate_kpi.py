@@ -79,6 +79,6 @@ def get_top_n_customers( df:pd.core.frame.DataFrame,
         elif sort_column =='LIFETIMEORDERVOLUME':
             return df[['CUSTOMERID', 'CUSTOMERNAME', 'ORDERID']].groupby(['CUSTOMERID', 'CUSTOMERNAME'])['ORDERID'].count().sort_values(ascending=False)[:n].reset_index(name=sort_column)
         else:
-            raise ValueError("Invalid column provided!!")
+            raise NotImplementedError
     except Exception as error:
         raise Exception('Caught this error: ' + repr(error))
