@@ -46,10 +46,10 @@ This challenge involves mainly the following aspects:
   - **Project Structure**:
 
         .
-        ├── Scripts                                      # Containss all the necessray python scripts
+        ├── Scripts                                      # Contains all the necessray fuctions
         │   ├── calculate_kpi.py                         # Contains functions to calculate different KPI
         │   ├── DataSchemas.py                           # Class used to define a common API for a set of schema subclasses
-        │   ├── ETL.py                                   # Class used to transform and save table according to the provided schema
+        │   ├── ETL.py                                   # This class acts as a facade to interact with the DataSchenas subclasses
         │   ├── StarSchema.py                            # Class used to transform and save table according to star-schema
         │   └──utils.py                                  # Containss all the global helper functions
         ├── output                                       # Default Folder to store output
