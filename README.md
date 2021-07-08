@@ -50,7 +50,7 @@ This challenge involves mainly the following aspects:
         │   ├── calculate_kpi.py                         # Contains functions to calculate different KPI
         │   ├── DataSchemas.py                           # Class used to define a common API for a set of schema subclasses
         │   ├── ETL.py                                   # This class acts as a facade to interact with the DataSchenas subclasses
-        │   ├── StarSchema.py                            # Class used to transform and save table according to star-schema
+        │   ├── StarSchema.py                            # Subclass of DataSchema class. Used to transform and save table according to star-schema
         │   └──utils.py                                  # Containss all the global helper functions
         ├── output                                       # Default Folder to store output
         │   └── Sales                                    # Folder containing output of different schemas 
