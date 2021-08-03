@@ -42,11 +42,11 @@ def orders_per_month(df:pd.core.frame.DataFrame,
     try: 
         aggregate_function = aggregate_function.lower().replace(' ', '')
         if aggregate_function=='sum':
-            result = df[['ORDERDATE', 'ORDERID']].resample(rule='M', on='ORDERDATE').count()[['ORDERID']].rename({'ORDERID':'ORDERSPERMONTH'}, axis=1).reset_index()
+            result = df[['ORDERDATE']].resample(rule='M', on='ORDERDATE').count().rename({'ORDERDATE':'ORDERSPERMONTH'}, axis=1).reset_index()
             return replace_date_to_month_column(result)
         
         elif aggregate_function=='averageordervolume':
-            result = df[['ORDERDATE', 'ORDERID']].resample(rule='M', on='ORDERDATE').count()[['ORDERID']].rename({'ORDERID':'ORDERSPERMONTH'}, axis=1)
+            result = df[['ORDERDATE']].resample(rule='M', on='ORDERDATE').count().rename({'ORDERDATE':'ORDERSPERMONTH'}, axis=1).reset_index()
             result['AVERAGEGORDERVOLUMEPERMONTH'] = result['ORDERSPERMONTH'].expanding().mean()
             result = result.reset_index()
             result = replace_date_to_month_column(result)
